@@ -1,10 +1,1 @@
-[
-    {
-        "id":"1234",
-        "name": "Room",
-        "description": "Nice and cozy",
-        "city": "Sofia",
-        "beds": 2,
-        "price": 100
-    }
-]
+[{"id":"1234","name":"Room","description":"Nice and cozy","city":"Sofia","beds":2,"price":100,"imgUrl":"/static/assets/room1.png"},{"id":"0500b1","name":"Hotel Room","description":"Spacious. Great View","city":"Varna","beds":1,"price":150,"imgUrl":"/static/accets/room2.png"},{"id":"03dd27","name":"Room","description":"Great view","city":"Burgas","beds":2,"price":100,"imgUrl":"/static/assets/room2.png"}]
