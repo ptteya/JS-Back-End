@@ -37,10 +37,10 @@
     },
     {
       "name": "Random Cube",
-      "description": "fdafa",
+      "description": "something",
       "imageUrl": "https://m.media-amazon.com/images/I/514gwcvKpJL._AC_.jpg",
-      "difficultyLevel": "1",
-      "id": 6
+      "difficultyLevel": "2",
+      "id": "6"
     }
   ]
 }
