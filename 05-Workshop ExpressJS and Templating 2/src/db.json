@@ -1,0 +1,12 @@
+{
+  "cubes": [
+    {
+      "name": {
+        "name": "test",
+        "description": "test",
+        "imageUrl": "test",
+        "difficultyLevel": "1"
+      }
+    }
+  ]
+}
