@@ -10,10 +10,10 @@ class Cube {
         this.difficultyLevel = difficultyLevel;
     }
 
-    static save(cube) {
+    save() {
         const lastId = Number(db.cubes[db.cubes.length - 1].id);
-        cube.id = (lastId + 1).toString();
-        db.cubes.push(cube);
+        this.id = (lastId + 1).toString();
+        db.cubes.push(this);
         const jsonData = JSON.stringify(db, null, 2);
         fs.writeFileSync(path.resolve(__dirname, '../db.json'), jsonData);
     }
