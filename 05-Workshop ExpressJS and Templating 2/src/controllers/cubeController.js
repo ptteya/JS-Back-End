@@ -8,9 +8,13 @@ exports.getCreateCube = (req, res) => {
 exports.postCreateCube = async (req, res) => {
     const { name, description, imageUrl, difficultyLevel } = req.body;
 
-    let cube = new Cube({ name, description, imageUrl, difficultyLevel });
-
-    await cube.save();
+    try {
+        let cube = new Cube({ name, description, imageUrl, difficultyLevel });
+        await cube.save();
+    } catch (err) {
+        console.log(err.message);
+        return res.redirect('/404');
+    }
 
     res.redirect('/');
 };
@@ -27,7 +31,7 @@ exports.getDetails = async (req, res) => {
 
 exports.getAttachAccessory = async (req, res) => {
     const cube = await Cube.findById(req.params.cubeId).lean();
-    const accessories = await Accessory.find().lean();
+    const accessories = await Accessory.find({ _id: { $nin: cube.accessories } }).lean();
 
     res.render('cube/attach', { cube, accessories });
 }
