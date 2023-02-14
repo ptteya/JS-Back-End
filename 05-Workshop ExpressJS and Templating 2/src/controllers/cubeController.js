@@ -10,8 +10,15 @@ exports.getCreateCube = (req, res) => {
 exports.postCreateCube = async (req, res) => {
     const { name, description, imageUrl, difficultyLevel } = req.body;
 
+    let cube = new Cube({
+        name,
+        description,
+        imageUrl,
+        difficultyLevel,
+        owner: req.user._id
+    });
+
     try {
-        let cube = new Cube({ name, description, imageUrl, difficultyLevel });
         await cube.save();
     } catch (err) {
         console.log(err.message);
@@ -22,18 +29,27 @@ exports.postCreateCube = async (req, res) => {
 };
 
 exports.getDetails = async (req, res) => {
-    const cube = await Cube.findById(req.params.cubeId).populate('accessories').lean();
+    const cube = await Cube.findById(req.params.cubeId)
+        .populate('accessories')
+        .lean();
 
     if (!cube) {
         return res.redirect('/404');
     }
 
-    res.render('cube/details', { cube });
+    const isOwner = cubeUtils.isOwner(req.user, cube);
+
+    res.render('cube/details', { cube, isOwner });
+
 }
 
 exports.getAttachAccessory = async (req, res) => {
     const cube = await Cube.findById(req.params.cubeId).lean();
     const accessories = await Accessory.find({ _id: { $nin: cube.accessories } }).lean();
+
+    if (!cubeUtils.isOwner(req.user, cube)) {
+        return res.redirect('/404');
+    }
 
     res.render('cube/attach', { cube, accessories });
 }
@@ -51,6 +67,10 @@ exports.postAttachAccessory = async (req, res) => {
 exports.getEditCube = async (req, res) => {
     const cube = await cubeManager.getOne(req.params.cubeId).lean();
     const difficultyLevels = cubeUtils.generateDifficultyLevels(cube.difficultyLevel);
+
+    if (!cubeUtils.isOwner(req.user, cube)) {
+        return res.redirect('/404');
+    }
 
     res.render('cube/edit', { cube, difficultyLevels });
 }
@@ -71,6 +91,10 @@ exports.postEditCube = async (req, res) => {
 exports.getDeleteCube = async (req, res) => {
     const cube = await cubeManager.getOne(req.params.cubeId).lean();
     const difficultyLevels = cubeUtils.generateDifficultyLevels(cube.difficultyLevel);
+
+    if (!cubeUtils.isOwner(req.user, cube)) {
+        return res.redirect('/404');
+    }
 
     res.render('cube/delete', { cube, difficultyLevels });
 }
