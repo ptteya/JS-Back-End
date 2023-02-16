@@ -22,7 +22,8 @@
                     <li>
                         <a href="#">Browse</a>
                     </li>
-                    <!-- User actions -->
+
+                    {{#if isAuthenticated}}
                     <li class="user">
                         <a href="#">Publish</a>
                     </li>
@@ -37,13 +38,14 @@
                     <li class="user">
                         <a href="/auth/logout">Logout</a>
                     </li>
-                    <!-- Guest actions -->
+                    {{else}}
                     <li class="guest">
                         <a href="/auth/register">Register</a>
                     </li>
                     <li class="guest">
                         <a href="/auth/login">Login</a>
                     </li>
+                    {{/if}}
                 </ul>
             </nav>
         </header>

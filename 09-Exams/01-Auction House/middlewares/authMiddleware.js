@@ -9,8 +9,8 @@ exports.authentication = async (req, res, next) => {
             const decodedToken = await jwt.verify(token, JWT_SECRET);
 
             req.user = decodedToken;
-            req.locals.isAuthenticated = true;
-            req.locals.user = decodedToken;
+            res.locals.isAuthenticated = true;
+            res.locals.user = decodedToken;
         } catch (error) {
             return res.status(401).render('404');
         }
