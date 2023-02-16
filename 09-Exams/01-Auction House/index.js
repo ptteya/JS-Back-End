@@ -1,7 +1,10 @@
 const express = require('express');
+
 const routes = require('./routes');
+const { PORT } = require('./constants');
 const hbsConfig = require('./config/hbsConfig');
 const expressConfig = require('./config/expressConfig');
+const initDatabase = require('./config/initDatabase');
 
 const app = express();
 
@@ -10,6 +13,10 @@ expressConfig(app);
 
 app.use(routes);
 
-
-
-app.listen(3000, () => console.log('Server is listening on port 3000..'));
+initDatabase()
+    .then(() => {
+        app.listen(PORT, () => console.log(`Server is listening on port ${PORT}..`));
+    })
+    .catch((err) => {
+        console.log('Cannot connect database: ', err)
+    });
