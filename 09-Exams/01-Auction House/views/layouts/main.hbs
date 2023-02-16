@@ -20,12 +20,12 @@
             <nav class="main-nav nav-mid">
                 <ul>
                     <li>
-                        <a href="#">Browse</a>
+                        <a href="/auction/browse">Browse</a>
                     </li>
 
                     {{#if isAuthenticated}}
                     <li class="user">
-                        <a href="#">Publish</a>
+                        <a href="/auction/create">Publish</a>
                     </li>
 
                     <!-- Bonus action -->
@@ -49,6 +49,13 @@
                 </ul>
             </nav>
         </header>
+
+
+        {{#if error}}
+        <div class="error-box">
+            <p>{{error}}</p>
+        </div>
+        {{/if}}
 
         {{{body}}}
 
