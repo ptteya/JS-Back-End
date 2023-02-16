@@ -12,6 +12,7 @@ exports.authentication = async (req, res, next) => {
             res.locals.isAuthenticated = true;
             res.locals.user = decodedToken;
         } catch (error) {
+            res.clearCookie('auth');
             return res.status(401).render('404');
         }
     }
