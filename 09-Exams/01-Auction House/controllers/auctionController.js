@@ -25,4 +25,11 @@ router.get('/browse', async (req, res) => {
     res.render('auction/browse', { auctions });
 });
 
+router.get('/:auctionId/details', async (req, res) => {
+    const auction = await auctionService.getOne(req.params.auctionId).populate('author');
+    const author = `${auction.author.firstName} ${auction.author.lastName}`
+
+    res.render('auction/details', { auction, author });
+});
+
 module.exports = router;
