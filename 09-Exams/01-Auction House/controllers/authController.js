@@ -20,14 +20,17 @@ router.post('/register', async (req, res) => {
             throw new Error('User exists');
         }
 
-        await authService.create(userData);
+        const token = await authService.register(userData);
+
+        console.log(token);
+
+        res.cookie('auth', token);
+        res.redirect('/');
 
     } catch (error) {
         console.log(error);
         return res.status(400).end();
     }
-
-    res.redirect('/');
 });
 
 router.get('/login', (req, res) => {
