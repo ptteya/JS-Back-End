@@ -8,6 +8,8 @@ exports.create = (authorId, auctionData) => Auction.create({ ...auctionData, aut
 
 exports.delete = (auctionId) => Auction.findByIdAndDelete(auctionId);
 
+exports.update = (auctionId, data) => Auction.findByIdAndUpdate(auctionId, data, { runValidators: true });
+
 exports.updatePriceAndBidder = async (userId, auctionId, bidAmount) => {
     const auction = await this.getOne(auctionId);
 

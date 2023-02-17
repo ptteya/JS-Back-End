@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const auctionService = require('../services/auctionService');
 const { getErrorMessage } = require('../utils/errorUtils');
+const { getCategoryTypesViewData } = require('../utils/viewDataUtils');
 
 router.get('/create', (req, res) => {
     res.render('auction/create');
@@ -40,8 +41,27 @@ router.post('/:auctionId/bid', async (req, res) => {
     try {
         await auctionService.updatePriceAndBidder(req.user._id, req.params.auctionId, Number(bidAmount));
         res.redirect(`/auction/${req.params.auctionId}/details`);
-    } catch (err) {
+    } catch (error) {
         res.status(400).render('auction/create', { error: getErrorMessage(error) });
+    }
+});
+
+router.get('/:auctionId/edit', async (req, res) => {
+    const auction = await auctionService.getOne(req.params.auctionId);
+
+    const categoryTypes = getCategoryTypesViewData(auction.category);
+
+    res.render('auction/edit', { auction, categoryTypes });
+});
+
+router.post('/:auctionId/edit', async (req, res) => {
+    const auctionData = req.body;
+
+    try {
+        await auctionService.update(req.params.auctionId, auctionData);
+        res.redirect(`/auction/${req.params.auctionId}/details`);
+    } catch (error) {
+        res.status(400).end();
     }
 });
 
@@ -49,5 +69,6 @@ router.get('/:auctionId/delete', async (req, res) => {
     await auctionService.delete(req.params.auctionId);
     res.redirect('/auction/browse');
 });
+
 
 module.exports = router;
