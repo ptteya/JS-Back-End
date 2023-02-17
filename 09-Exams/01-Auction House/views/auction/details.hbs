@@ -1,6 +1,14 @@
 <main>
     <section id="catalog-section">
-        <h1 class="item">{{auction.title}}</h1>
+        <h1 class="item">{{auction.title}}
+            {{#if isAuthor}}
+            <div class="f-right">
+                <a class="action pad-small f-left" href="#">Edit</a>
+                <a class="action pad-small f-left" href="#">Delete</a>
+            </div>
+            {{/if}}
+        </h1>
+
         <div class="item padded">
             <div class="layout right large">
 
@@ -18,17 +26,31 @@
                             Current price: $<strong>{{auction.price}}</strong>
                         </div>
 
-                        <!-- If current user can place a bid -->
-                        <form class="vertical" method="post" action="#">
-                            <label><span>Bid amount</span><input type="number" name=""></label>
+                        {{#if isAuthenticated}}
+                        {{#if isAuthor}}
+                        <div>
+                            {{#if auction.bidder}}
+                            Bid by <strong>{{auction.bidder.firstName}} {{auction.bidder.lastName}}</strong>
+                            {{else}}
+                            No bids
+                            {{/if}}
+                            <!-- # Bonus: If there is a bidder --><!--
+                                    <a class="action pad-med cta" href="#">Close Auction</a>
+                            # End of Bonus -->
+                        </div>
+                        {{else}}
+                        {{#if canBid}}
+                        <form class="vertical" method="POST" action="/auction/{{auction._id}}/bid">
+                            <label><span>Bid amount</span><input type="number" name="bidAmount"></label>
                             <input class="action" type="submit" value="Place bid">
                         </form>
-
-                        <!-- If current user is the bidder -->
-                        {{!-- <div>
+                        {{else}}
+                        <div>
                             You are currently the <strong>highest bidder</strong> for this auction
-                        </div> --}}
-
+                        </div>
+                        {{/if}}
+                        {{/if}}
+                        {{/if}}
                     </div>
 
                 </div>
