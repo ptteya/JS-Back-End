@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const auctionSchema = new mongoose.Schema({
     title: {
         type: String,
-        minLength: 4,
-        required: true,
+        minLength: [4, 'Title is too short'],
+        required: [true, 'Title is required'],
     },
     category: {
         type: String,
@@ -19,23 +19,22 @@ const auctionSchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        min: 0,
-        required: true
+        min: [0, 'Price must be a positive number'],
+        required: [true, 'Price is required']
     },
     description: {
         type: String,
-        maxLength: 200,
+        maxLength: [200, 'Description is too long'],
     },
     author: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
-    bidden: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: 'User'
-        }
-    ]
+    bidder: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }
+
 });
 
 const Auction = mongoose.model('Auction', auctionSchema);
