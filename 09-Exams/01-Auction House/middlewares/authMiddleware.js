@@ -21,9 +21,17 @@ exports.authentication = async (req, res, next) => {
 }
 
 exports.isAuth = (req, res, next) => {
-    if (!req.user) {
-        return res.redirect('/');
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/auth/login');
     }
+}
 
-    next();
+exports.isGuest = (req, res, next) => {
+    if (!req.user) {
+        next();
+    } else {
+        res.redirect('/');
+    }
 }

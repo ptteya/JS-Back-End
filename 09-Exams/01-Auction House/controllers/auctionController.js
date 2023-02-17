@@ -3,12 +3,14 @@ const router = require('express').Router();
 const auctionService = require('../services/auctionService');
 const { getErrorMessage } = require('../utils/errorUtils');
 const { getCategoryTypesViewData } = require('../utils/viewDataUtils');
+const { isAuth } = require('../middlewares/authMiddleware');
+const { isAuthor } = require('../middlewares/auctionMiddleware');
 
-router.get('/create', (req, res) => {
+router.get('/create', isAuth, (req, res) => {
     res.render('auction/create');
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', isAuth, async (req, res) => {
     const auctionData = req.body;
 
     try {
@@ -46,7 +48,7 @@ router.post('/:auctionId/bid', async (req, res) => {
     }
 });
 
-router.get('/:auctionId/edit', async (req, res) => {
+router.get('/:auctionId/edit', isAuthor, async (req, res) => {
     const auction = await auctionService.getOne(req.params.auctionId);
 
     const categoryTypes = getCategoryTypesViewData(auction.category);
@@ -54,7 +56,7 @@ router.get('/:auctionId/edit', async (req, res) => {
     res.render('auction/edit', { auction, categoryTypes });
 });
 
-router.post('/:auctionId/edit', async (req, res) => {
+router.post('/:auctionId/edit', isAuthor, async (req, res) => {
     const auctionData = req.body;
 
     try {
@@ -65,7 +67,7 @@ router.post('/:auctionId/edit', async (req, res) => {
     }
 });
 
-router.get('/:auctionId/delete', async (req, res) => {
+router.get('/:auctionId/delete', isAuthor, async (req, res) => {
     await auctionService.delete(req.params.auctionId);
     res.redirect('/auction/browse');
 });
