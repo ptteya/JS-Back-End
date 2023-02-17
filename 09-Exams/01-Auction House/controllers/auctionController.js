@@ -45,4 +45,9 @@ router.post('/:auctionId/bid', async (req, res) => {
     }
 });
 
+router.get('/:auctionId/delete', async (req, res) => {
+    await auctionService.delete(req.params.auctionId);
+    res.redirect('/auction/browse');
+});
+
 module.exports = router;
