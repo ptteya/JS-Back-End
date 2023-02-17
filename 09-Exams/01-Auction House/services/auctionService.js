@@ -2,7 +2,7 @@ const Auction = require('../models/Auction');
 
 exports.getOne = (auctionId) => Auction.findById(auctionId).lean();
 
-exports.getAll = () => Auction.find({}).lean();
+exports.getAll = () => Auction.find({ closed: false }).lean();
 
 exports.create = (authorId, auctionData) => Auction.create({ ...auctionData, author: authorId });
 
@@ -23,3 +23,8 @@ exports.updatePriceAndBidder = async (userId, auctionId, bidAmount) => {
 
     return Auction.findByIdAndUpdate(auctionId, { price: bidAmount, bidder: userId }, { runValidators: true });
 };
+
+exports.closeAuction = (auctionId) => this.update(auctionId, { closed: true });
+
+exports.getClosedAuctions = (userId) => Auction.find({ author: userId, closed: true }).populate('author').lean();
+

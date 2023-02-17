@@ -72,5 +72,24 @@ router.get('/:auctionId/delete', isAuthor, async (req, res) => {
     res.redirect('/auction/browse');
 });
 
+router.get('/closedAuctions', async (req, res) => {
+    const closedAuctions = await auctionService.getClosedAuctions(req.user._id);
+
+    res.render('auction/closedAuctions', { closedAuctions });
+});
+
+router.get('/:auctionId/close', async (req, res) => {
+    const auctionId = req.params.auctionId;
+
+    try {
+        await auctionService.closeAuction(auctionId);
+        res.redirect('/auction/closedAuctions');
+    } catch (error) {
+        console.log(error);
+        res.status(400).end();
+    }
+});
+
+
 
 module.exports = router;

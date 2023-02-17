@@ -1,14 +1,4 @@
 <main>
-    <!-- In case of error, display the following div-->
-    <!--
-
-            <div class="error-box">
-                <p>Show each error in a separate paragraph</p>
-            </div>
-
-            -->
-
-    <!-- Home Page -->
     <section id="catalog-section">
 
         <h1 class="item">Home</h1>
@@ -28,8 +18,11 @@
                     </p>
 
                     <div class="align-center">
-                        <a class="action" href="#">Browse Listings</a>
-                        <a class="action" href="#">Publish Auction</a>
+                        <a class="action" href="/auction/browse">Browse Listings</a>
+
+                        {{#if isAuthenticated}}
+                        <a class="action" href="/auction/create">Publish Auction</a>
+                        {{/if}}
                     </div>
                 </div>
             </div>

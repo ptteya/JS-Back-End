@@ -31,12 +31,10 @@
                         <div>
                             {{#if auction.bidder}}
                             Bid by <strong>{{auction.bidder.firstName}} {{auction.bidder.lastName}}</strong>
+                            <a class="action pad-med cta" href="/auction/{{auction._id}}/close">Close Auction</a>
                             {{else}}
                             No bids
                             {{/if}}
-                            <!-- # Bonus: If there is a bidder --><!--
-                                    <a class="action pad-med cta" href="#">Close Auction</a>
-                            # End of Bonus -->
                         </div>
                         {{else}}
                         {{#if canBid}}
