@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        validate: /^[a-zA-Z]+@[a-zA-Z]+.[a-zA-Z]+/,
+        validate: /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+/,
         required: [true, 'Email is required']
     },
     password: {
