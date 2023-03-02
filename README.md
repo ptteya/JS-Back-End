@@ -7,4 +7,4 @@ SoftUni JS-Back-End course - lectures and exercises
 
 |  Course | Link     | 
 | :-------- | :------- | 
-| JS Advanced  |[Link](https://softuni.bg/certificates/details/162734/aa36c602)| 
+| JS-Back-End  |[Link](https://softuni.bg/certificates/details/162734/aa36c602)| 
